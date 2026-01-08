@@ -80,14 +80,14 @@ export default function TransactionsPage() {
                            <div className="text-sm space-y-1">
                             {transaction.type === "CREDIT" && (
                               <div className="flex justify-between">
-                                <span className="text-muted-foreground">RECIEVED FROM   </span>
+                                <span className="text-muted-foreground">RECIEVED FROM  :</span>
                                 <span className="font-medium">{transaction.senderAccount}</span>
                               </div>
                             )}
 
                             {transaction.type === "DEBIT" && (
                               <div className="flex justify-between">
-                                <span className="text-muted-foreground">SEND TO </span>
+                                <span className="text-muted-foreground">SEND TO  :</span>
                                 <span className="font-medium">{transaction.recieverAccount}</span>
                               </div>
                             )}
