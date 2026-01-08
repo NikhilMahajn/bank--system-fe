@@ -12,8 +12,12 @@ export default function Home() {
       const role = getRole()
       if (role === "ROLE_ADMIN") {
         router.push("/admin/dashboard")
-      } else {
+      } else if (role === "ROLE_EMPLOYEE") {
+        router.push("/employee/dashboard")
+      } else if (role === "ROLE_CUSTOMER") {
         router.push("/dashboard")
+      } else {
+        router.push("/login")
       }
     } else {
       router.push("/login")
