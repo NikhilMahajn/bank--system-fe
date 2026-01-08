@@ -34,7 +34,7 @@ export default function DepositPage() {
       setSuccess("Deposit completed successfully!")
       setBalance("")
     } catch (err: any) {
-      setError(err.response?.data?.message || "Deposit failed")
+      setError(err.response?.data?.message || "Deposit Failed")
     } finally {
       setLoading(false)
     }
