@@ -14,6 +14,7 @@ interface DashboardStats {
   totalAmount: number
 }
 
+
 export default function AdminDashboardPage() {
   const [stats, setStats] = useState<DashboardStats>({
     activeAccounts: 0,
@@ -38,7 +39,7 @@ export default function AdminDashboardPage() {
   }, [])
 
   return (
-    <ProtectedRoute requiredRole="ROLE_EMPLOYEE">
+    <ProtectedRoute requiredRole="ROLE_ADMIN">
       <Navbar />
       <div className="flex">
         <Sidebar />

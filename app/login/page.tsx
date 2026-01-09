@@ -46,9 +46,12 @@ export default function LoginPage() {
         console.log(decoded)
         if (decoded) {
           localStorage.setItem("role", decoded.role)
-          if (decoded.role == "ROLE_EMPLOYEE" || decoded.role == "ROLE_ADMIN") {
+          if (decoded.role === "ROLE_ADMIN") {
             router.push("/admin/dashboard")
           } 
+          else if(decoded.role === "ROLE_EMPLOYEE"){
+            router.push("/employee/dashboard")
+          }
           else {
             router.push("/dashboard")
           }

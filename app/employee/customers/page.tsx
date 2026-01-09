@@ -68,9 +68,9 @@ export default function CustomersPage() {
     }
   }
 
-  const handleBlockCustomer = async (customerId: number) => {
+  const handleBlockCustomer = async (accountNumber: String) => {
     try {
-      await axiosInstance.post(`/employee/customers/${customerId}/block`)
+      await axiosInstance.post(`/accounts/block`,{accountNumber})
       await fetchCustomers()
       setSuccess("Customer blocked successfully!")
       setTimeout(() => setSuccess(""), 5000)
@@ -179,7 +179,7 @@ export default function CustomersPage() {
                               Status
                             </span>
                             {account.active == true && (
-                              <Button variant="destructive" size="sm" onClick={() => handleBlockCustomer(account.id)}>
+                              <Button variant="destructive" size="sm" onClick={() => handleBlockCustomer(account.accountNumber)}>
                                 Block
                               </Button>
                             )}

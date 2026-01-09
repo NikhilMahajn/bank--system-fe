@@ -6,29 +6,18 @@ import Navbar from "@/components/navbar"
 import Sidebar from "@/components/sidebar"
 import axiosInstance from "@/lib/axios"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Users, Building2, CreditCard, TrendingUp } from "lucide-react"
+import { Users, CreditCard, TrendingUp, Activity } from "lucide-react"
 
 interface AnalyticsData {
+  totalCustomers: number
   totalAccounts: number
-  totalBranches: number
-  totalEmployees: number
-  totalAmount: number
-  
+  totalBalance: number
+  activeTransactions: number
 }
 
-interface Employees {
-  name : String
-}
-interface Branches {
-  branchName : String
-  city : String
-}
-
-export default function AdminAnalyticsPage() {
+export default function EmployeeAnalyticsPage() {
   const [analytics, setAnalytics] = useState<AnalyticsData | null>(null)
   const [loading, setLoading] = useState(true)
-  const [employees,SetEmployees] = useState<Employees[]>([]);
-  const [branches,setBranches] = useState<Branches[]>([]);
 
   useEffect(() => {
     const fetchAnalytics = async () => {
@@ -45,38 +34,8 @@ export default function AdminAnalyticsPage() {
     fetchAnalytics()
   }, [])
 
-  useEffect(() => {
-    const fetchEmployee = async () => {
-      try {
-        const response = await axiosInstance.get("/employee/get-employees")
-        SetEmployees(response.data)
-      } catch (error) {
-        console.error("Failed to fetch analytics:", error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchEmployee()
-  }, [])
-
-  useEffect(() => {
-    const fetchBranches = async () => {
-      try {
-        const response = await axiosInstance.get("/branch/get-branches")
-        setBranches(response.data)
-      } catch (error) {
-        console.error("Failed to fetch analytics:", error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchBranches()
-  }, [])
-
   return (
-    <ProtectedRoute requiredRole="ROLE_ADMIN">
+    <ProtectedRoute requiredRole="ROLE_EMPLOYEE">
       <Navbar />
       <div className="flex">
         <Sidebar />
@@ -96,30 +55,19 @@ export default function AdminAnalyticsPage() {
                     <Users className="h-4 w-4 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-3xl font-bold">{analytics?.totalAccounts || 0}</div>
-                    <p className="text-xs text-muted-foreground mt-1">Across all branches</p>
+                    <div className="text-3xl font-bold">{analytics?.totalCustomers || 0}</div>
+                    <p className="text-xs text-muted-foreground mt-1">Active customers</p>
                   </CardContent>
                 </Card>
 
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
-                    <CardTitle className="text-sm font-medium text-muted-foreground">Total Branches</CardTitle>
-                    <Building2 className="h-4 w-4 text-muted-foreground" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-3xl font-bold">{branches.length || 0}</div>
-                    <p className="text-xs text-muted-foreground mt-1">Operating branches</p>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between pb-2">
-                    <CardTitle className="text-sm font-medium text-muted-foreground">Total Employees</CardTitle>
+                    <CardTitle className="text-sm font-medium text-muted-foreground">Total Accounts</CardTitle>
                     <CreditCard className="h-4 w-4 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-3xl font-bold">{employees.length || 0}</div>
-                    <p className="text-xs text-muted-foreground mt-1">Staff members</p>
+                    <div className="text-3xl font-bold">{analytics?.totalAccounts || 0}</div>
+                    <p className="text-xs text-muted-foreground mt-1">Open accounts</p>
                   </CardContent>
                 </Card>
 
@@ -130,9 +78,20 @@ export default function AdminAnalyticsPage() {
                   </CardHeader>
                   <CardContent>
                     <div className="text-3xl font-bold">
-                      ${analytics?.totalAmount?.toLocaleString("en-US", { maximumFractionDigits: 0 }) || "0"}
+                      ${analytics?.totalBalance?.toLocaleString("en-US", { maximumFractionDigits: 0 }) || "0"}
                     </div>
-                    <p className="text-xs text-muted-foreground mt-1">System-wide assets</p>
+                    <p className="text-xs text-muted-foreground mt-1">Combined balance</p>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between pb-2">
+                    <CardTitle className="text-sm font-medium text-muted-foreground">Active Transactions</CardTitle>
+                    <Activity className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-3xl font-bold">{analytics?.activeTransactions || 0}</div>
+                    <p className="text-xs text-muted-foreground mt-1">This month</p>
                   </CardContent>
                 </Card>
               </div>

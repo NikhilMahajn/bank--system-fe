@@ -12,7 +12,7 @@ interface AnalyticsData {
   activeAccounts: number
   totalAccounts: number
   totalAmount: number
-  activeTransactions: number
+  totalTransactions: number
 }
 
 export default function EmployeeDashboardPage() {
@@ -90,7 +90,7 @@ export default function EmployeeDashboardPage() {
                     <Activity className="h-4 w-4 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">{analytics?.activeTransactions || 0}</div>
+                    <div className="text-2xl font-bold">{analytics?.totalTransactions || 0}</div>
                     <p className="text-xs text-muted-foreground mt-1">This month</p>
                   </CardContent>
                 </Card>
