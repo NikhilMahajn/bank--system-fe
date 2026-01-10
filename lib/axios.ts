@@ -9,7 +9,6 @@ const axiosInstance = axios.create({
   },
 })
 
-// Request interceptor to add JWT token
 axiosInstance.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token")
@@ -23,7 +22,6 @@ axiosInstance.interceptors.request.use(
   },
 )
 
-// Response interceptor for error handling
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
