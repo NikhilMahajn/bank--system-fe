@@ -9,9 +9,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Users, CreditCard, TrendingUp, Activity } from "lucide-react"
 
 interface AnalyticsData {
-  totalCustomers: number
+  activeAccounts: number
   totalAccounts: number
-  totalBalance: number
+  totalAmount: number
   activeTransactions: number
 }
 
@@ -22,7 +22,7 @@ export default function EmployeeAnalyticsPage() {
   useEffect(() => {
     const fetchAnalytics = async () => {
       try {
-        const response = await axiosInstance.get("/accounts/stats")
+        const response = await axiosInstance.get("/accounts/branch-stats")
         setAnalytics(response.data)
       } catch (error) {
         console.error("Failed to fetch analytics:", error)
@@ -55,7 +55,7 @@ export default function EmployeeAnalyticsPage() {
                     <Users className="h-4 w-4 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-3xl font-bold">{analytics?.totalCustomers || 0}</div>
+                    <div className="text-3xl font-bold">{analytics?.totalAccounts || 0}</div>
                     <p className="text-xs text-muted-foreground mt-1">Active customers</p>
                   </CardContent>
                 </Card>
@@ -66,7 +66,7 @@ export default function EmployeeAnalyticsPage() {
                     <CreditCard className="h-4 w-4 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-3xl font-bold">{analytics?.totalAccounts || 0}</div>
+                    <div className="text-3xl font-bold">{analytics?.activeAccounts || 0}</div>
                     <p className="text-xs text-muted-foreground mt-1">Open accounts</p>
                   </CardContent>
                 </Card>
@@ -78,7 +78,7 @@ export default function EmployeeAnalyticsPage() {
                   </CardHeader>
                   <CardContent>
                     <div className="text-3xl font-bold">
-                      ${analytics?.totalBalance?.toLocaleString("en-US", { maximumFractionDigits: 0 }) || "0"}
+                      ${analytics?.totalAmount?.toLocaleString("en-US", { maximumFractionDigits: 0 }) || "0"}
                     </div>
                     <p className="text-xs text-muted-foreground mt-1">Combined balance</p>
                   </CardContent>

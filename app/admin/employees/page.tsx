@@ -72,7 +72,7 @@ export default function EmployeesPage() {
 
   const handleRemoveEmployee = async (employeeId: number) => {
     try {
-      await axiosInstance.delete(`/admin/employees/${employeeId}`)
+      await axiosInstance.delete(`/employee/${employeeId}`)
       await fetchEmployees()
       setSuccess("Employee removed successfully!")
       setTimeout(() => setSuccess(""), 5000)

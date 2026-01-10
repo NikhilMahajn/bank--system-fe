@@ -22,7 +22,7 @@ export default function EmployeeDashboardPage() {
   useEffect(() => {
     const fetchAnalytics = async () => {
       try {
-        const response = await axiosInstance.get("/accounts/stats")
+        const response = await axiosInstance.get("/accounts/branch-stats")
         setAnalytics(response.data)
       } catch (error) {
         console.error("Failed to fetch analytics:", error)
